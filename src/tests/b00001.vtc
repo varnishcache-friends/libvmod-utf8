@@ -1,0 +1,42 @@
+varnishtest "Test utf8.transform() with ASCII"
+
+server s1 {
+	rxreq
+	txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import utf8 from "${vmod_topbuild}/src/.libs/libvmod_utf8.so";
+
+	sub vcl_deliver {
+		# No options
+		set resp.http.x-no-opt = utf8.transform(req.http.x-ascii, 0);
+		# Case folding
+		set resp.http.x-cf = utf8.transform(req.http.x-ascii, 1024);
+		# Strip all markings
+		set resp.http.x-sm = utf8.transform(req.http.x-ascii, 8192);
+		# Case folding + strip all markings
+		set resp.http.x-cf-sm = utf8.transform(req.http.x-ascii,
+		    1024 + 8192);
+		# Case folding + strip all markings + lump certain
+		# characters together
+		set resp.http.x-cf-sm-lc = utf8.transform(req.http.x-ascii,
+		    1024 + 8192 + 4096);
+	}
+} -start
+
+client c1 {
+	txreq -hdr \
+	    "x-ascii: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	rxresp
+	expect resp.http.x-no-opt == \
+	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	expect resp.http.x-cf == \
+	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+	expect resp.http.x-sm == \
+	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	expect resp.http.x-cf-sm == \
+	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+	expect resp.http.x-cf-sm-lc == \
+	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+} -run

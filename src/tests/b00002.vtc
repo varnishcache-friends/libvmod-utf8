@@ -1,0 +1,34 @@
+varnishtest "Test invalid input"
+
+server s1 {
+	rxreq
+	txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import utf8 from "${vmod_topbuild}/src/.libs/libvmod_utf8.so";
+
+	sub vcl_deliver {
+		set resp.http.x-invalid = utf8.transform(
+		    req.http.x-iso88591, 0);
+		set resp.http.x-no-input = utf8.transform(
+		    req.http.nonexistent, 0);
+	}
+} -start
+
+logexpect l1 -v v1 {
+	expect * 1001 Debug \
+	    "utf8proc_decompose\\([^,]*, 0, 0x[0-9a-f]*, [0-9]*, 0x0001\\)"
+	expect 0 =    Error "utf8.transform failed: Invalid UTF-8 string"
+	expect * =    Error "utf8.transform failed: No input"
+} -start
+
+client c1 {
+	# This is ISO-8859-1 encoded
+	txreq -hdr "x-iso88591: áéíóúçñßÁÉÍÓÚÇÑ"
+	rxresp
+	expect resp.http.x-invalid == ""
+	expect resp.http.x-no-input == ""
+} -run
+
+logexpect l1 -wait
