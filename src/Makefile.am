@@ -14,7 +14,10 @@ nodist_libvmod_utf8_la_SOURCES = \
 
 dist_man_MANS = vmod_utf8.3
 
-VMOD_utf8S = tests/*.vtc
+VTC_LOG_COMPILER = $(VARNISHTEST) -v -i \
+	-Dvarnishd=$(VARNISHD) -Dvmod_topbuild=$(abs_top_builddir)
+TEST_EXTENSIONS = .vtc
+TESTS = @VMOD_TESTS@
 
 $(libvmod_utf8_la_OBJECTS): vcc_if.h
 
@@ -24,12 +27,8 @@ vcc_if.c vcc_if.h vmod_utf8.man.rst: $(VMODTOOL) $(top_srcdir)/src/vmod.vcc
 vmod_utf8.3: vmod_utf8.man.rst
 	${RST2MAN} $? $@
 
-check:
-	$(VARNISHTEST) -Dvarnishd=$(VARNISHD) \
-	    -Dvmod_topbuild=$(abs_top_builddir) $(VMOD_utf8S)
-
 EXTRA_DIST = vmod.vcc \
-	$(VMOD_utf8S)
+	$(TESTS)
 
 CLEANFILES = $(builddir)/vcc_if.c \
 	$(builddir)/vcc_if.h \
