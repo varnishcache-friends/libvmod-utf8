@@ -17,10 +17,9 @@ varnish v1 -vcl+backend {
 } -start
 
 logexpect l1 -v v1 {
-	expect * 1001 Debug \
-	    "utf8proc_decompose\\([^,]*, 0, 0x[0-9a-f]*, [0-9]*, 0x0001\\)"
-	expect 0 =    Error "utf8.transform failed: Invalid UTF-8 string"
-	expect * =    Error "utf8.transform failed: No input"
+	expect * 1001 Error \
+	    "utf8.transform: utf8proc_decompose: Invalid UTF-8 string"
+	expect * =    Error "utf8.transform: No input"
 } -start
 
 client c1 {

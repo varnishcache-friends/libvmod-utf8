@@ -51,7 +51,7 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 	CHECK_OBJ_NOTNULL(ctx, VRT_CTX_MAGIC);
 
 	if (!s) {
-		VSLb(ctx->vsl, SLT_Error, "utf8.transform failed: No input");
+		VSLb(ctx->vsl, SLT_Error, "utf8.transform: No input");
 		return (NULL);
 	}
 
@@ -68,10 +68,8 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 	len = utf8proc_decompose((utf8proc_uint8_t *)s, 0 /* IGNORED */,
 	    (utf8proc_int32_t *)p, u, options);
 	if (len < 0) {
-		VSLb(ctx->vsl, SLT_Debug,
-		    "utf8proc_decompose(%s, 0, %p, %u, 0x%04x)",
-		    s, p, u, (int)options);
-		VSLb(ctx->vsl, SLT_Error, "utf8.transform failed: %s",
+		VSLb(ctx->vsl, SLT_Error,
+		    "utf8.transform: utf8proc_decompose: %s",
 		    utf8proc_errmsg(len));
 		WS_Release(ctx->ws, 0);
 		return (NULL);
