@@ -10,27 +10,27 @@ varnish v1 -vcl+backend {
 
 	sub vcl_deliver {
 		# No options
-		set resp.http.x-no-opt = utf8.transform(req.http.x-utf8, 0);
+		set resp.http.no-opt = utf8.transform(req.http.utf8, 0);
 		# Case folding
-		set resp.http.x-cf = utf8.transform(req.http.x-utf8, 1024);
+		set resp.http.cf = utf8.transform(req.http.utf8, 1024);
 		# Strip all markings
-		set resp.http.x-sm = utf8.transform(req.http.x-utf8, 8192);
+		set resp.http.sm = utf8.transform(req.http.utf8, 8192);
 		# Case folding + strip all markings
-		set resp.http.x-cf-sm = utf8.transform(req.http.x-utf8,
+		set resp.http.cf-sm = utf8.transform(req.http.utf8,
 		    1024 + 8192);
 		# Case folding + strip all markings + lump certain
 		# characters together
-		set resp.http.x-cf-sm-lc = utf8.transform(req.http.x-utf8,
+		set resp.http.cf-sm-lc = utf8.transform(req.http.utf8,
 		    1024 + 8192 + 4096);
 	}
 } -start
 
 client c1 {
-	txreq -hdr "x-utf8: áéíóúçñßÁÉÍÓÚÇÑ‐−"
+	txreq -hdr "utf8: áéíóúçñßÁÉÍÓÚÇÑ‐−"
 	rxresp
-	expect resp.http.x-no-opt == "áéíóúçñßÁÉÍÓÚÇÑ‐−"
-	expect resp.http.x-cf == "áéíóúçñssáéíóúçñ‐−"
-	expect resp.http.x-sm == "aeioucnßAEIOUCN‐−"
-	expect resp.http.x-cf-sm == "aeioucnssaeioucn‐−"
-	expect resp.http.x-cf-sm-lc == "aeioucnssaeioucn--"
+	expect resp.http.no-opt == "áéíóúçñßÁÉÍÓÚÇÑ‐−"
+	expect resp.http.cf == "áéíóúçñssáéíóúçñ‐−"
+	expect resp.http.sm == "aeioucnßAEIOUCN‐−"
+	expect resp.http.cf-sm == "aeioucnssaeioucn‐−"
+	expect resp.http.cf-sm-lc == "aeioucnssaeioucn--"
 } -run

@@ -9,9 +9,9 @@ varnish v1 -vcl+backend {
 	import utf8 from "${vmod_topbuild}/src/.libs/libvmod_utf8.so";
 
 	sub vcl_deliver {
-		set resp.http.x-invalid = utf8.transform(
-		    req.http.x-iso88591, 0);
-		set resp.http.x-no-input = utf8.transform(
+		set resp.http.invalid = utf8.transform(
+		    req.http.iso88591, 0);
+		set resp.http.no-input = utf8.transform(
 		    req.http.nonexistent, 0);
 	}
 } -start
@@ -24,10 +24,10 @@ logexpect l1 -v v1 {
 
 client c1 {
 	# This is ISO-8859-1 encoded
-	txreq -hdr "x-iso88591: áéíóúçñßÁÉÍÓÚÇÑ"
+	txreq -hdr "iso88591: áéíóúçñßÁÉÍÓÚÇÑ"
 	rxresp
-	expect resp.http.x-invalid == ""
-	expect resp.http.x-no-input == ""
+	expect resp.http.invalid == ""
+	expect resp.http.no-input == ""
 } -run
 
 logexpect l1 -wait

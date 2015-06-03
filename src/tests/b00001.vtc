@@ -10,33 +10,33 @@ varnish v1 -vcl+backend {
 
 	sub vcl_deliver {
 		# No options
-		set resp.http.x-no-opt = utf8.transform(req.http.x-ascii, 0);
+		set resp.http.no-opt = utf8.transform(req.http.ascii, 0);
 		# Case folding
-		set resp.http.x-cf = utf8.transform(req.http.x-ascii, 1024);
+		set resp.http.cf = utf8.transform(req.http.ascii, 1024);
 		# Strip all markings
-		set resp.http.x-sm = utf8.transform(req.http.x-ascii, 8192);
+		set resp.http.sm = utf8.transform(req.http.ascii, 8192);
 		# Case folding + strip all markings
-		set resp.http.x-cf-sm = utf8.transform(req.http.x-ascii,
+		set resp.http.cf-sm = utf8.transform(req.http.ascii,
 		    1024 + 8192);
 		# Case folding + strip all markings + lump certain
 		# characters together
-		set resp.http.x-cf-sm-lc = utf8.transform(req.http.x-ascii,
+		set resp.http.cf-sm-lc = utf8.transform(req.http.ascii,
 		    1024 + 8192 + 4096);
 	}
 } -start
 
 client c1 {
 	txreq -hdr \
-	    "x-ascii: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	    "ascii: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	rxresp
-	expect resp.http.x-no-opt == \
+	expect resp.http.no-opt == \
 	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	expect resp.http.x-cf == \
+	expect resp.http.cf == \
 	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-	expect resp.http.x-sm == \
+	expect resp.http.sm == \
 	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	expect resp.http.x-cf-sm == \
+	expect resp.http.cf-sm == \
 	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-	expect resp.http.x-cf-sm-lc == \
+	expect resp.http.cf-sm-lc == \
 	    "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
 } -run
