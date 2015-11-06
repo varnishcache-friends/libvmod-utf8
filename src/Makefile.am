@@ -2,12 +2,18 @@
 vmoddir = $(VMOD_DIR)
 vmod_LTLIBRARIES = libvmod_utf8.la
 
-libvmod_utf8_la_CFLAGS = $(VMOD_INCLUDES)
+UTF8PROC_CFLAGS = -std=c99 -DUTF8PROC_EXPORTS 
+libvmod_utf8_la_CFLAGS = $(VMOD_INCLUDES) $(UTF8PROC_CFLAGS)
 libvmod_utf8_la_LDFLAGS = -module -export-dynamic -avoid-version -shared \
 	$(LIBS)
 
 libvmod_utf8_la_SOURCES = \
 	vmod_utf8.c
+libvmod_utf8_la_CFLAGS += -I$(top_srcdir)/utf8proc
+libvmod_utf8_la_SOURCES += \
+	$(top_srcdir)/utf8proc/utf8proc.c \
+	$(top_srcdir)/utf8proc/utf8proc.h
+
 nodist_libvmod_utf8_la_SOURCES = \
 	vcc_if.c \
 	vcc_if.h
