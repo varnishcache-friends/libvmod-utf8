@@ -31,6 +31,7 @@ vmod_utf8.3: vmod_utf8.man.rst
 	${RST2MAN} $? $@
 
 EXTRA_DIST = vmod.vcc \
+	$(top_srcdir)/utf8proc/utf8proc_data.c \
 	$(TESTS)
 
 CLEANFILES = $(builddir)/vcc_if.c \
