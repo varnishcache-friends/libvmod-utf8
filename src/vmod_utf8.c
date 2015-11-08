@@ -50,10 +50,17 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 
 	CHECK_OBJ_NOTNULL(ctx, VRT_CTX_MAGIC);
 
-	if (!s) {
+	if (!s || !*s) {
 		VSLb(ctx->vsl, SLT_Error, "utf8.transform: No input");
 		return (NULL);
 	}
+
+	u = WS_Reserve(ctx->ws, 0);
+	if (!u) {
+		VSLb(ctx->vsl, SLT_Error, "utf8.transform: Out of workspace");
+		return (NULL);
+	}
+	p = ctx->ws->f;
 
 	/* Use composed if not specified. */
 	if ((options & UTF8PROC_STRIPMARK) &&
@@ -61,9 +68,6 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 		options |= UTF8PROC_COMPOSE;
 	/* Input is NULL terminated. */
 	options |= UTF8PROC_NULLTERM;
-
-	u = WS_Reserve(ctx->ws, 0);
-	p = ctx->ws->f;
 
 	len = utf8proc_decompose((utf8proc_uint8_t *)s, 0 /* IGNORED */,
 	    (utf8proc_int32_t *)p, u, options);

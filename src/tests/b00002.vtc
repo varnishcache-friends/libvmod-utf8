@@ -11,14 +11,17 @@ varnish v1 -vcl+backend {
 	sub vcl_deliver {
 		set resp.http.invalid = utf8.transform(
 		    req.http.iso88591, 0);
-		set resp.http.no-input = utf8.transform(
+		set resp.http.no-input1 = utf8.transform(
 		    req.http.nonexistent, 0);
+		set resp.http.no-input2 = utf8.transform(
+		    "", 0);
 	}
 } -start
 
 logexpect l1 -v v1 {
 	expect * 1001 Error \
 	    "utf8.transform: utf8proc_decompose: Invalid UTF-8 string"
+	expect * =    Error "utf8.transform: No input"
 	expect * =    Error "utf8.transform: No input"
 } -start
 
@@ -27,7 +30,8 @@ client c1 {
 	txreq -hdr "iso88591: áéíóúçñßÁÉÍÓÚÇÑ"
 	rxresp
 	expect resp.http.invalid == ""
-	expect resp.http.no-input == ""
+	expect resp.http.no-input1 == ""
+	expect resp.http.no-input2 == ""
 } -run
 
 logexpect l1 -wait
