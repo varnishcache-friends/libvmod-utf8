@@ -49,7 +49,6 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 	unsigned u;
 
 	CHECK_OBJ_NOTNULL(ctx, VRT_CTX_MAGIC);
-
 	if (!s || !*s) {
 		VSLb(ctx->vsl, SLT_Error, "utf8.transform: No input");
 		return (NULL);
