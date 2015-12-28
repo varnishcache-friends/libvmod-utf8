@@ -5,24 +5,21 @@ server s1 {
 	txresp
 } -start
 
-varnish v1 -vcl+backend {
+varnish v1 -arg "-p workspace_client=9k" -vcl+backend {
 	import utf8 from "${vmod_topbuild}/src/.libs/libvmod_utf8.so";
 
 	sub vcl_deliver {
 		set resp.http.invalid = utf8.transform(
 		    req.http.iso88591, 0);
-		set resp.http.no-input1 = utf8.transform(
-		    req.http.nonexistent, 0);
-		set resp.http.no-input2 = utf8.transform(
-		    "", 0);
 	}
 } -start
 
 logexpect l1 -v v1 {
 	expect * 1001	Error \
 	    "utf8.transform: utf8proc_decompose: Invalid UTF-8 string"
-	expect * =	Error	"utf8.transform: No input"
-	expect * =	Error	"utf8.transform: No input"
+	expect * 1003	Error	"utf8.transform: Out of workspace"
+	expect * 1004	Error	"utf8.transform: No input"
+	expect * 1005	Error	"utf8.transform: No input"
 } -start
 
 client c1 {
@@ -30,8 +27,18 @@ client c1 {
 	txreq -hdr "iso88591: ·ÈÌÛ˙ÁÒﬂ¡…Õ”⁄«—"
 	rxresp
 	expect resp.http.invalid == ""
-	expect resp.http.no-input1 == ""
-	expect resp.http.no-input2 == ""
+	send "GET / HTTP/1.1\r\n"
+	send "iso88591: "
+	send_n 500 "A"
+	send "\r\n\r\n"
+	rxresp
+	expect resp.http.invalid == ""
+	txreq -hdr "iso88591: "
+	rxresp
+	expect resp.http.invalid == ""
+	txreq
+	rxresp
+	expect resp.http.invalid == ""
 } -run
 
 logexpect l1 -wait
