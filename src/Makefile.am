@@ -8,8 +8,8 @@ libvmod_utf8_la_LDFLAGS = -module -export-dynamic -avoid-version -shared \
 
 libvmod_utf8_la_SOURCES = \
 	vmod_utf8.c \
-	@top_builddir@/utf8proc/utf8proc.c \
-	@top_builddir@/utf8proc/utf8proc.h
+	$(top_srcdir)/utf8proc/utf8proc.c \
+	$(top_srcdir)/utf8proc/utf8proc.h
 
 nodist_libvmod_utf8_la_SOURCES = \
 	vcc_if.c \

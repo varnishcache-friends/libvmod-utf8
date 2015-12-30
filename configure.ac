@@ -4,7 +4,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR(src/vmod.vcc)
 AM_CONFIG_HEADER(config.h)
 
-AM_INIT_AUTOMAKE([foreign color-tests parallel-tests subdir-objects])
+AM_INIT_AUTOMAKE([foreign color-tests parallel-tests])
 
 AC_DISABLE_STATIC
 
