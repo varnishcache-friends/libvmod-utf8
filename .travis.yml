@@ -19,3 +19,11 @@ before_install:
 script:
   - ./configure && make CFLAGS="-Wall -Wextra -Werror" &&
     make check VERBOSE=1
+cache: apt
+notifications:
+  webhooks:
+    urls:
+      secure: "V0WKdDUdbqCMzFoJp9nrqgAPNW33YyeOra1SJAaW+EcGDiSjItWkowDjtnRNN6+Ph/ok/Dk2eFrLiNx54smVF+Ub35wHCftvb5Dg2NaSUEPOYhYo/sC1sEsAmrRR4IkenUTqsjoWT2uapVhy4sfIStUufRBLOMqMJOFITtpTbUQ="
+    on_success: change
+    on_failure: always
+    on_start: never
