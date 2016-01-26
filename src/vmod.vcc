@@ -24,6 +24,27 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-$Module utf8 3
+$Module utf8 3 Varnish UTF-8 Manipulation Module
 
-$Function STRING transform(STRING s, INT options)
+DESCRIPTION
+===========
+
+$Function STRING transform(STRING, INT)
+
+Description
+
+Example
+	set req.url = utf8.transform(req.url, 1024);
+
+ERRORS
+======
+
+* "utf8.transform: No input"
+* "utf8.transform: Out of workspace"
+* "utf8.transform: utf8proc_decompose: %s"
+
+SEE ALSO
+========
+
+* `varnishlog(1)`
+* `vsl(7)`
