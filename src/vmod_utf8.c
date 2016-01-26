@@ -26,14 +26,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-
 #include <utf8proc.h>
 
 #include "cache/cache.h"
 
 #include "vrt.h"
-#include "vsa.h"
 
 #include "vcc_if.h"
 

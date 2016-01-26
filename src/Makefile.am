@@ -3,8 +3,7 @@ vmoddir = $(VMOD_DIR)
 vmod_LTLIBRARIES = libvmod_utf8.la
 
 libvmod_utf8_la_CFLAGS = $(VMOD_INCLUDES) -I$(top_srcdir)/utf8proc
-libvmod_utf8_la_LDFLAGS = -module -export-dynamic -avoid-version -shared \
-	$(LIBS)
+libvmod_utf8_la_LDFLAGS = -module -export-dynamic -avoid-version -shared
 
 libvmod_utf8_la_SOURCES = \
 	vmod_utf8.c \
@@ -17,7 +16,7 @@ nodist_libvmod_utf8_la_SOURCES = \
 
 dist_man_MANS = vmod_utf8.3
 
-VTC_LOG_COMPILER = $(VARNISHTEST) -v -i \
+VTC_LOG_COMPILER = $(VARNISHTEST) -v \
 	-Dvarnishd=$(VARNISHD) -Dvmod_topbuild=$(abs_top_builddir)
 TEST_EXTENSIONS = .vtc
 TESTS = @VMOD_TESTS@
