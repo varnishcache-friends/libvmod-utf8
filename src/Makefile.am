@@ -1,4 +1,6 @@
 
+AM_TESTS_ENVIRONMENT = PATH=$(VARNISH_BINDIR):$(VARNISH_SBINDIR):$$PATH
+
 vmoddir = $(VMOD_DIR)
 vmod_LTLIBRARIES = libvmod_utf8.la
 
@@ -17,7 +19,7 @@ nodist_libvmod_utf8_la_SOURCES = \
 dist_man_MANS = vmod_utf8.3
 
 VTC_LOG_COMPILER = $(VARNISHTEST) -v \
-	-Dvarnishd=$(VARNISHD) -Dvmod_topbuild=$(abs_top_builddir)
+	-Dvmod_topbuild=$(abs_top_builddir)
 TEST_EXTENSIONS = .vtc
 TESTS = @VMOD_TESTS@
 
