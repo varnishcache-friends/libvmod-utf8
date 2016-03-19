@@ -75,7 +75,7 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 		WS_Release(ctx->ws, 0);
 		return (NULL);
 	}
-	assert(len * sizeof(utf8proc_int32_t) + 1 < u);
+	assert(len * sizeof(utf8proc_int32_t) + 1 <= u);
 
 	len = utf8proc_reencode((utf8proc_int32_t *)p, len, options);
 	assert(len > 0);
