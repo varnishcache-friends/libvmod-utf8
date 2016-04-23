@@ -8,7 +8,7 @@ before_install:
   - sudo apt-get install python-docutils
   - git clone https://github.com/varnishcache/varnish-cache.git
   - cd varnish-cache && ./autogen.sh && ./configure && make &&
-    sudo make install && cd ..
+    sudo make install && sudo ldconfig && cd ..
   - ./autogen.sh
 script:
   - ./configure && make CFLAGS="-Wall -Wextra -Werror" VERBOSE=1 distcheck
