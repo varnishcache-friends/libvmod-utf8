@@ -5,15 +5,16 @@ compiler:
   - clang
   - gcc
 env:
-  - VER=4.0
-  - VER=4.1
+  - VER=40
+  - VER=41
 before_install:
   - git submodule update --init --recursive
   - sudo apt-get update
   - sudo apt-get install apt-transport-https python-docutils
-  - curl -s https://repo.varnish-cache.org/ubuntu/GPG-key.txt |
+  - curl -L https://packagecloud.io/fgsch/varnish-$VER/gpgkey |
     sudo apt-key add -
-  - echo "deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-$VER" |
+  - echo
+    "deb https://packagecloud.io/fgsch/varnish-$VER/ubuntu/ trusty main" |
     sudo tee /etc/apt/sources.list.d/varnish-cache.list
   - sudo apt-get update
   - sudo apt-get install varnish libvarnishapi-dev
