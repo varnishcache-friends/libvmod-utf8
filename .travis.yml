@@ -20,5 +20,4 @@ script:
   - ./configure && make CFLAGS="-Wall -Wextra -Werror" VERBOSE=1 distcheck
 cache: apt
 notifications:
-  webhooks:
-    urls: $GITTER_IM_URL
+  webhooks: $GITTER_IM_URL
