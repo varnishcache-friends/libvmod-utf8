@@ -6,7 +6,7 @@ libvmod-utf8
 
 ## About
 
-A Varnish 4.x VMOD for Unicode normalization, case-folding, and other
+A Varnish 4 and 5 VMOD for Unicode normalization, case-folding, and other
 operations for data in the UTF-8 encoding.
 
 ## Requirements
