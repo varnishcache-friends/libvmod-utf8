@@ -14,8 +14,5 @@ before_install:
   - ./autogen.sh
 script:
   - ./configure && make CFLAGS="-Wall -Wextra -Werror" VERBOSE=1 distcheck
-cache: apt
 notifications:
-  webhooks:
-    urls:
-      secure: "Iu7ubvN/0qGSyU5f8XsGcY8Xn5uSuZZNQZZw4G5XqeXL6s7Uf1KMGRI2UtViFSV5+II2Wu5KFVox4pH0Jp5nVLo0YP5WpI+C9AaWwNVKt8DcGhzhDrXajXF5vyrKbFdoEwGJpe0ghBUjRHB16HjVniDYiJEDnHZwwtVqRMTVvAI="
+  webhooks: $GITTER_IM_URL
