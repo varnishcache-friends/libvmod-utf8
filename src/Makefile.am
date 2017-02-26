@@ -25,7 +25,7 @@ TESTS = @VMOD_TESTS@
 
 $(libvmod_utf8_la_OBJECTS): vcc_if.h
 
-vcc_if.h vmod_utf8.man.rst: vcc_if.c
+vcc_if.h vmod_utf8.man.rst vmod_utf8.rst: vcc_if.c
 
 vcc_if.c: $(VMODTOOL) $(top_srcdir)/src/vmod.vcc
 	$(PYTHON) $(VMODTOOL) $(top_srcdir)/src/vmod.vcc
