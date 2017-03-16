@@ -20,8 +20,8 @@ AC_ARG_ENABLE([gcov],
    CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"])
 AM_CONDITIONAL(USE_LCOV, [test x$LCOV != x && test x$GENHTML != x])
 
-AM_PATH_PYTHON([2.6], [], [
-  AC_MSG_ERROR([Python 2.6 or later is required.])
+AM_PATH_PYTHON([2.7], [], [
+  AC_MSG_ERROR([Python 2.7 or later is required.])
 ])
 
 AC_PATH_PROG([RST2MAN], [rst2man])
