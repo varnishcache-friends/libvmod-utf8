@@ -16,8 +16,9 @@ To build this VMOD you will need:
 * make
 * a C compiler, e.g. GCC or clang
 * pkg-config
-* python-docutils
-* libvarnishapi-dev in Debian/Ubuntu or varnish-libs-devel in CentOS/RedHat
+* python-docutils or docutils in macOS [1]
+* libvarnishapi-dev in Debian/Ubuntu, varnish-libs-devel in
+  CentOS/RedHat or varnish in macOS [1]
 
 If you are building from Git, you will also need:
 
@@ -78,3 +79,7 @@ sub vcl_recv {
 ## License
 
 This VMOD is licensed under BSD license. See LICENSE for details.
+
+### Note
+
+1. Using Homebrew, https://github.com/Homebrew/brew/.
