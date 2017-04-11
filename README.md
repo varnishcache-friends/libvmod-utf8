@@ -6,8 +6,10 @@ libvmod-utf8
 
 ## About
 
-A Varnish 4 and 5 VMOD for Unicode normalization, case-folding, and other
+A Varnish master VMOD for Unicode normalization, case-folding, and other
 operations for data in the UTF-8 encoding.
+
+For Varnish 4 and 5 support refer to the master branch.
 
 ## Requirements
 
@@ -16,8 +18,8 @@ To build this VMOD you will need:
 * make
 * a C compiler, e.g. GCC or clang
 * pkg-config
-* python-docutils
-* libvarnishapi-dev in Debian/Ubuntu or varnish-libs-devel in CentOS/RedHat
+* python-docutils or docutils in macOS [1]
+* Varnish master built from sources
 
 If you are building from Git, you will also need:
 
@@ -29,9 +31,9 @@ In addition, to run the tests you will need:
 
 * varnish
 
-If varnish is installed in a non-standard prefix you will also need
-to set `PKG_CONFIG_PATH` to the directory where **varnishapi.pc** is
-located before running `autogen.sh` and `configure`.  For example:
+You will also need to set `PKG_CONFIG_PATH` to the directory where
+**varnishapi.pc** is located before running `autogen.sh` and
+`configure`.  For example:
 
 ```
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -78,3 +80,7 @@ sub vcl_recv {
 ## License
 
 This VMOD is licensed under BSD license. See LICENSE for details.
+
+### Note
+
+1. Using Homebrew, https://github.com/Homebrew/brew/.
