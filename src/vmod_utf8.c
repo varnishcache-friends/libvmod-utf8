@@ -31,15 +31,13 @@
 
 #include "cache/cache.h"
 
-#include "vrt.h"
-
 #include "vcc_if.h"
 
 #ifndef VRT_CTX
 #define VRT_CTX		const struct vrt_ctx *ctx
 #endif
 
-VCL_STRING __match_proto__(td_utf8_transform)
+VCL_STRING
 vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 {
 	char *p;
