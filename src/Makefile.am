@@ -27,13 +27,13 @@ $(libvmod_utf8_la_OBJECTS): vcc_if.h
 
 vcc_if.h vmod_utf8.man.rst vmod_utf8.rst: vcc_if.c
 
-vcc_if.c: $(VMODTOOL) $(top_srcdir)/src/vmod.vcc
-	$(PYTHON) $(VMODTOOL) $(top_srcdir)/src/vmod.vcc
+vcc_if.c: $(VMODTOOL) $(top_srcdir)/src/vmod_utf8.vcc
+	$(PYTHON) $(VMODTOOL) $(top_srcdir)/src/vmod_utf8.vcc
 
 vmod_utf8.3: vmod_utf8.man.rst
 	$(RST2MAN) $? $@
 
-EXTRA_DIST = vmod.vcc \
+EXTRA_DIST = vmod_utf8.vcc \
 	$(top_srcdir)/utf8proc/utf8proc_data.c \
 	$(TESTS)
 

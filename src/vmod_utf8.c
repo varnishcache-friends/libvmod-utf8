@@ -27,15 +27,13 @@
  */
 
 #include <string.h>
+
 #include <utf8proc.h>
 
 #include "cache/cache.h"
 
 #include "vcc_if.h"
 
-#ifndef VRT_CTX
-#define VRT_CTX		const struct vrt_ctx *ctx
-#endif
 
 VCL_STRING
 vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
@@ -46,7 +44,8 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 
 	CHECK_OBJ_NOTNULL(ctx, VRT_CTX_MAGIC);
 	if (!s || !*s) {
-		VSLb(ctx->vsl, SLT_Error, "utf8.transform: No input");
+		VSLb(ctx->vsl, SLT_Error,
+		    "utf8.transform: No input");
 		return (NULL);
 	}
 	len = strlen(s);
@@ -54,7 +53,8 @@ vmod_transform(VRT_CTX, VCL_STRING s, VCL_INT options)
 
 	u = WS_Reserve(ctx->ws, 0);
 	if (u < len * sizeof(utf8proc_int32_t) + 1) {
-		VSLb(ctx->vsl, SLT_Error, "utf8.transform: Out of workspace");
+		VSLb(ctx->vsl, SLT_Error,
+		    "utf8.transform: Out of workspace");
 		WS_Release(ctx->ws, 0);
 		return (NULL);
 	}

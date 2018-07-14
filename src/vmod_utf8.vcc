@@ -30,11 +30,10 @@ $Module utf8 3 Varnish UTF-8 Manipulation Module
 DESCRIPTION
 ===========
 
-$Function STRING transform(STRING, INT)
+$Function STRING transform(STRING s, INT options)
 
 Description
-	Transforms the input string specified in the first argument
-	using the options specified in the second argument.
+	Transforms the input string using the specified options.
 
 	Returns the resulting string, or an empty string if an error
 	occurred.

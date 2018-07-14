@@ -1,7 +1,6 @@
 libvmod-utf8
 ============
 
-[![Join the chat at https://gitter.im/fgsch/libvmod-utf8](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fgsch/libvmod-utf8?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/fgsch/libvmod-utf8.svg?branch=devel)](https://travis-ci.org/fgsch/libvmod-utf8)
 
 ## About
@@ -9,7 +8,8 @@ libvmod-utf8
 A Varnish master VMOD for Unicode normalization, case-folding, and other
 operations for data in the UTF-8 encoding.
 
-For Varnish 4 and 5 support refer to the master branch.
+For Varnish 4.1/5.x and 6.0 refer to the oldstable and master
+branches, respectively.
 
 ## Requirements
 
@@ -27,12 +27,8 @@ If you are building from Git, you will also need:
 * automake
 * libtool
 
-In addition, to run the tests you will need:
-
-* varnish
-
-You will also need to set `PKG_CONFIG_PATH` to the directory where
-**varnishapi.pc** is located before running `autogen.sh` and
+In addition, you will need to set `PKG_CONFIG_PATH` to the directory
+where **varnishapi.pc** is located before running `autogen.sh` and
 `configure`.  For example:
 
 ```
