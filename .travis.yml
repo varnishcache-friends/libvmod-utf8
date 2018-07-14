@@ -1,4 +1,5 @@
 dist: trusty
+sudo: required
 language: c
 compiler:
   - clang
@@ -10,7 +11,8 @@ addons:
 before_install:
   - git submodule update --init --recursive
   - git clone https://github.com/varnishcache/varnish-cache.git
-  - cd varnish-cache && ./autogen.sh && ./configure && make && cd ..
-  - env PKG_CONFIG_PATH=$(pwd)/varnish-cache ./autogen.sh
+  - cd varnish-cache && ./autogen.sh && ./configure && make &&
+    sudo make install && sudo ldconfig && cd ..
+  - ./autogen.sh
 script:
   - ./configure && make CFLAGS="-Wall -Wextra -Werror" VERBOSE=1 distcheck
