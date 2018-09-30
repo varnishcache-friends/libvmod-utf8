@@ -8,7 +8,7 @@ libvmod-utf8
 A Varnish master VMOD for Unicode normalization, case-folding, and other
 operations for data in the UTF-8 encoding.
 
-For Varnish 4.1/5.x and 6.0 refer to the oldstable and master
+For Varnish 4.1/6.0 and 6.1 refer to the oldstable and master
 branches, respectively.
 
 ## Requirements
