@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
       - python-docutils
+      - python-sphinx
 before_install:
   - git submodule update --init --recursive
   - git clone -b varnish-6.1.0 https://github.com/varnishcache/varnish-cache.git
