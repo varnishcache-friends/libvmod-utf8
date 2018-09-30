@@ -54,4 +54,4 @@ SEE ALSO
 
 * `varnishlog(1)`
 * `vsl(7)`
-* http://julialang.org/utf8proc/
+* https://juliastrings.github.io/utf8proc/
