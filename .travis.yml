@@ -6,11 +6,12 @@ compiler:
   - gcc
 env:
   - VER=4.1.10
-  - VER=5.2.1
+  - VER=6.0.1
 addons:
   apt:
     packages:
       - python-docutils
+      - python-sphinx
 before_install:
   - git submodule update --init --recursive
   - git clone -b varnish-$VER https://github.com/varnishcache/varnish-cache.git
