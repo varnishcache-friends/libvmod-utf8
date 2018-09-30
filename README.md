@@ -5,10 +5,10 @@ libvmod-utf8
 
 ## About
 
-A Varnish 6.0 VMOD for Unicode normalization, case-folding, and
+A Varnish 6.1 VMOD for Unicode normalization, case-folding, and
 other operations for data in the UTF-8 encoding.
 
-For Varnish 4.1/5.x and master refer to the oldstable and devel
+For Varnish 4.1/6.0 and master refer to the oldstable and devel
 branches, respectively.
 
 ## Requirements
@@ -61,7 +61,7 @@ tests are passing on your platform.
 To install from Git, clone this repository by running:
 
 ```
-git clone --recursive https://github.com/fgsch/libvmod-utf8
+git clone --branch master --recursive https://github.com/fgsch/libvmod-utf8
 ```
 
 And then run `./autogen.sh` followed by the instructions above for
