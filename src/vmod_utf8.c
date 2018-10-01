@@ -26,11 +26,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <string.h>
+
 #include <utf8proc.h>
 
 #include "cache/cache.h"
 
+#if !defined(VRT_MAJOR_VERSION)
 #include "vrt.h"
+#endif
 
 #include "vcc_if.h"
 
