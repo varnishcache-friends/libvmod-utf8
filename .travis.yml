@@ -1,12 +1,16 @@
-dist: trusty
+dist: xenial
 sudo: required
 language: c
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+    - compiler: gcc
+      env: configure_args='--enable-gcov'
+    - compiler: clang
+      env: configure_args=''
 addons:
   apt:
     packages:
+      - lcov
       - python-docutils
       - python-sphinx
 before_install:
@@ -15,5 +19,12 @@ before_install:
   - cd varnish-cache && ./autogen.sh && ./configure && make &&
     sudo make install && sudo ldconfig && cd ..
   - ./autogen.sh
-script:
-  - ./configure && make CFLAGS="-Wall -Wextra -Werror" VERBOSE=1 distcheck
+script: |
+  ./configure CFLAGS="-Wall -Wextra -Werror" $configure_args
+  make check VERBOSE=1
+after_success: |
+  if [ -f src/.libs/libvmod_utf8_la-vcc_if.gcno ]; then
+    gcov --object-file=src/.libs/libvmod_utf8_la-vcc_if.gcno src/vmod_utf8.c
+    bash <(curl -s https://codecov.io/bash)
+  fi
+  make distcheck
