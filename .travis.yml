@@ -22,6 +22,6 @@ before_install:
 script:
   - ./configure CFLAGS="-Wall -Wextra -Werror" $configure_args
   - make check VERBOSE=1
-after_success: |
+after_success:
   - bash <(curl -s https://codecov.io/bash)
   - make distcheck
