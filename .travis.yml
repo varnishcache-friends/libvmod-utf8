@@ -19,12 +19,9 @@ before_install:
   - cd varnish-cache && ./autogen.sh && ./configure && make &&
     sudo make install && sudo ldconfig && cd ..
   - ./autogen.sh
-script: |
-  ./configure CFLAGS="-Wall -Wextra -Werror" $configure_args
-  make check VERBOSE=1
+script:
+  - ./configure CFLAGS="-Wall -Wextra -Werror" $configure_args
+  - make check VERBOSE=1
 after_success: |
-  if [ -f src/.libs/libvmod_utf8_la-vcc_if.gcno ]; then
-    gcov --object-file=src/.libs/libvmod_utf8_la-vcc_if.gcno src/vmod_utf8.c
-    bash <(curl -s https://codecov.io/bash)
-  fi
-  make distcheck
+  - bash <(curl -s https://codecov.io/bash)
+  - make distcheck
