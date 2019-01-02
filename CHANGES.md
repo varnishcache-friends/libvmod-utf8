@@ -1,3 +1,8 @@
+## Unreleased
+
+* Silence warning when processing the .vcc file.
+* Switch Travis CI to xenial and hook codecov.io.
+
 ## 1.1.3 - 2018-07-14
 
 * Fix tests.
